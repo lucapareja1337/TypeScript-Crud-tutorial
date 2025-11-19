@@ -1,105 +1,106 @@
-# Backend CRUD de Usuários com Autenticação JWT
+# User CRUD Backend with JWT Authentication
 
-Este projeto implementa um backend básico em Node.js, TypeScript e SQLite com as operações fundamentais de CRUD (Create, Read, Update, Delete) para gerenciamento de usuários, incluindo controle de autenticação e autorização via JWT (JSON Web Token).
-
----
-
-## O que é CRUD?
-
-CRUD é o acrônimo para as operações básicas utilizadas em sistemas que manipulam dados:
-
-- **Create (Criar):** Inserir novos dados no sistema.
-- **Read (Ler):** Consultar dados existentes.
-- **Update (Atualizar):** Modificar dados existentes.
-- **Delete (Deletar):** Remover dados do sistema.
-
-Estas operações são a base para a maioria das aplicações que precisam armazenar e manipular dados, seja em bancos relacionais (SQL), NoSQL ou APIs RESTful.
+This project implements a basic backend in Node.js, TypeScript, and SQLite with fundamental CRUD (Create, Read, Update, Delete) operations for user management, including authentication and authorization control via JWT (JSON Web Token).
 
 ---
 
-## Funcionalidades Principais do Projeto
+## What is CRUD?
 
-- **Cadastro de Usuários:** Qualquer pessoa pode criar um usuário (sem precisar estar autenticada), porém não pode criar administradores diretamente.
-- **Login com JWT:** Usuários fazem login com email e senha, recebendo um token JWT que deve ser enviado para autorizar operações protegidas.
-- **Controle de Acesso:**
-  - Apenas administradores podem listar todos os usuários e obter usuários por ID.
-  - Usuários comuns podem criar suas contas, atualizar seus próprios dados e deletar sua conta.
-  - O administrador pode fazer tudo que o usuário comum faz, além das listagens e consultas gerais.
-- **Upload de Foto de Perfil:** O cadastro e atualização permitem enviar uma foto de perfil, armazenada no servidor.
-- **Banco SQLite:** Banco leve e embutido, fácil para desenvolvimento e pequenos projetos.
+CRUD is an acronym for the basic operations used in systems that manipulate data:
+
+- **Create:** Insert new data into the system.
+- **Read:** Query existing data.
+- **Update:** Modify existing data.
+- **Delete:** Remove data from the system.
+
+These operations are the basis for most applications that need to store and manipulate data, whether in relational databases (SQL), NoSQL, or RESTful APIs.
 
 ---
 
-## Como Utilizar a API
+## Main Project Features
 
-### 1. Criar usuário
+- **User Registration:** Anyone can create a user (without having to be authenticated), but cannot directly create administrators.
+- **Login with JWT:** Users log in with their email and password, receiving a JWT token that must be sent to authorize protected operations.
+- **Access Control:**
+  - Only administrators can list all users and obtain users by ID.
+  - Regular users can create their accounts, update their own data, and delete their accounts.
+  - The administrator can do everything that a regular user does, in addition to general listings and queries.
+- **Profile Photo Upload:** Registration and updates allow you to upload a profile photo, which is stored on the server.
+- **SQLite Database:** Lightweight, built-in database, easy for development and small projects.
 
-- Método: `POST /api/users`
-- Aberto para qualquer cliente, não precisa de token.
-- Campos obrigatórios: `email`, `password`, `name`.
-- Não é permitido criar usuário administrador via API pública.
+---
+
+## How to Use the API
+
+### 1. Create user
+
+- Method: `POST /api/users`
+- Open to any client, no token required.
+- Required fields: `email`, `password`, `name`.
+- Creating an administrator user via the public API is not allowed.
 
 ### 2. Login
 
-- Método: `POST /api/auth/login`
-- Enviar `email` e `password`.
-- Retorna token JWT para autenticação nas próximas requisições.
+- Method: `POST /api/auth/login`
+- Send `email` and `password`.
+- Returns JWT token for authentication in subsequent requests.
 
-### 3. Consultar usuários (somente admin)
+### 3. Query users (admin only)
 
-- Listar todos: `GET /api/users`
-- Obter por ID: `GET /api/users/:id`
-- Exige token JWT válido de administrador.
+- List all: `GET /api/users`
+- Get by ID: `GET /api/users/:id`
+- Requires valid administrator JWT token.
 
-### 4. Atualizar usuário
+### 4. Update user
 
-- Método: `PUT /api/users/:id`
-- Pode atualizar somente seu próprio usuário (ou admin pode atualizar qualquer).
-- Enviar token JWT no header `Authorization: Bearer <token>`.
-- Pode incluir upload de foto no formulário.
+- Method: `PUT /api/users/:id`
+- You can only update your own user (or admin can update any).
+- Send JWT token in the header `Authorization: Bearer <token>`.
+- You can include photo upload in the form.
 
-### 5. Deletar usuário
+### 5. Delete user
 
-- Método: `DELETE /api/users/:id`
-- Pode deletar sua própria conta (ou admin qualquer conta).
-- Requer token JWT de autenticação.
-
----
-
-## Importância do JWT e do Segredo (JWT_SECRET)
-
-O token JWT permite autenticar usuários sem a necessidade de ficar consultando o banco em todas as requisições. O segredo (`JWT_SECRET`) é uma chave secreta usada para assinar e validar esses tokens, garantindo segurança para que ninguém consiga forjar tokens e acessar recursos indevidamente.
-
-O segredo deve ser mantido seguro no ambiente (idealmente num arquivo `.env`) e jamais exposto em código fonte público.
+- Method: `DELETE /api/users/:id`
+- You can delete your own account (or admin can delete any account).
+- Requires JWT authentication token.
 
 ---
 
-## Como rodar o projeto
+## Importance of JWT and Secret (JWT_SECRET)
 
-1. Configure o arquivo `.env` na raiz com:
+The JWT token allows you to authenticate users without having to consult the database for every request. The secret (`JWT_SECRET`) is a secret key used to sign and validate these tokens, ensuring security so that no one can forge tokens and access resources improperly.
 
-2. Instale dependências:
-
-3. Compile o TypeScript (se usar compilação):
-
-4. Inicie o servidor (modo dev com refresh automático recomendado):
-
-5. Use ferramentas como Postman para testar os endpoints REST.
+The secret must be kept secure in the environment (ideally in a `.env` file) and never exposed in public source code.
 
 ---
 
-## Para Desenvolvedores Novatos
+## How to run the project
 
-- Entender operações CRUD é fundamental para manipulação de dados.
-- Aprender a usar JWT ajuda a criar APIs seguras e escaláveis.
-- Entender middlewares Express (como autenticação e upload) é essencial para backend moderno.
-- Trabalhar com SQLite é uma boa introdução a bancos de dados relacionais leves.
+1. Configure the `.env` file in the root with:
 
-Este projeto é uma base sólida para construir aplicações web completas com autenticação e controle de acesso.
+2. Install dependencies:
+
+3. Compile TypeScript (if using compilation):
+
+4. Start the server (dev mode with automatic refresh recommended):
+
+5. Use tools such as Postman to test the REST endpoints.
+
+---
+
+## For Beginner Developers
+
+- Understanding CRUD operations is fundamental to data manipulation.
+- Learning to use JWT helps you create secure and scalable APIs.
+- Understanding Express middleware (such as authentication and upload) is essential for modern backends.
+- Working with SQLite is a good introduction to lightweight relational databases.
+
+This project is a solid foundation for building complete web applications with authentication and access control.
 
 
-Fique à vontade para contribuir, criar issues ou solicitar novas funcionalidades!
-## Expectativas
-Em breve, será disponibilizada uma versão com frontend com React ou Angular. O intuito, é crescer a ferramenta, inclusive agregando ferramentas de IA, e aplicações modernas como o uso de RAGs. Será discutido o uso de tensorflow para 
-os próximos passos. Principalmente, o foco principal deste sistema ainda está sendo definido, mas o esqueleto para garantir um MVP de autenticação está feito.
+Feel free to contribute, create issues, or request new features!
+## Expectations
+A version with a React or Angular frontend will be available soon. The goal is to grow the tool, including adding AI tools and modern applications such as the use of RAGs. The use of TensorFlow will be discussed for 
+the next steps. The main focus of this system is still being defined, but the framework to ensure an authentication MVP is in place.
 
+# TypeScript-Crud-tutorial
